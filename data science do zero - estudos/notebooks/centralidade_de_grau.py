@@ -102,7 +102,7 @@ for user_id, interest in interests:
 
 # fazendo um indice de usuários para interesses
 # as chaves são os user_ids, os valores são listas de interesses do user_id em questão
-interests_by_user_id = defaultdict
+interests_by_user_id = defaultdict(list)
 
 for user_id, interest in interests: 
     interests_by_user_id[user_id].append(interest)  
@@ -114,3 +114,11 @@ def most_common_interests_with(user):
         for interested_user_id in user_ids_by_interest[interest]
         if interested_user_id != user["id"]
 )                               
+
+words_and_counts = Counter(word
+                           for user, interest in interests
+                           for word in interest.lower().split())
+
+for word, count in words_and_counts.most_common():
+    if count > 1:
+        print(word, count)
